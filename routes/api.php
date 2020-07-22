@@ -6,6 +6,6 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'v1'], function() {
 
-    Route::get('waittimes/{id}', 'WaittimesController@show');
+    Route::get('wait-times/{id}', 'WaittimesController@show');
 
 });
