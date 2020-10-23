@@ -23,8 +23,7 @@ class Waittime extends BaseModel
         $xml=simplexml_load_string($result);
 
         $response = $xml->waitInfo;
-
-        if ($response)
+        if ($response && $xml->getName() == "waitInfos")
         {
 
             $waittime = new static;
