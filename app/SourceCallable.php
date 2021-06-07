@@ -7,7 +7,6 @@ trait SourceCallable
 
     protected function call($path)
     {
-
         $url = config('source.api_url') . $path;
         $proxy = env('CURL_PROXY');
 
@@ -17,12 +16,15 @@ trait SourceCallable
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        $contents = curl_exec($ch);
+        $result = curl_exec($ch);
+
+        if ($result === false) {
+            throw new \Exception('Curl error: ' . curl_error($ch));
+        }
 
         curl_close($ch);
 
-        return $contents;
-
+        return $result;
     }
 
 }
