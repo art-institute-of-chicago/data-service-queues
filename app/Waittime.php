@@ -19,8 +19,12 @@ class Waittime extends BaseModel
 
     public function find($id)
     {
-       $result = $this->call("/kiosk/data/" . config('source.api_key') . "?serial=web");
+        $result = $this->call("/kiosk/data/" . config('source.api_key') . "?serial=web");
         $json = json_decode($result);
+
+        if ($json === null && json_last_error() !== JSON_ERROR_NONE) {
+           throw new \Exception(json_last_error());
+        }
 
         foreach ($json as $queue) {
             if ($queue->queueId == $id) {
